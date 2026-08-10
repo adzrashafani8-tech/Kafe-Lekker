@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kafe Lekker · Spin & Bayar</title>
+    <!-- Google Font Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        /* ----- RESET & VARIABEL WARNA ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --coklat: #5E3A2B;
+            --krem: #F7EDE1;
+            --oranye: #D98A5B;
+            --coklat-muda: #A87B65;
+            --shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            --radius: 20px;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #FEF9F4;
+            color: #2E1F1A;
+            scroll-behavior: smooth;
+        }
+
+        /* ----- LAYOUT UTAMA ----- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ----- HEADER / NAV ----- */
+        header {
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 14px 0;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 252, 248, 0.92);
+        }
+
+        .nav-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--coklat);
+        }
+        .logo span {
+            background: var(--oranye);
+            color: white;
+            font-size: 0.9rem;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-weight: 600;
+        }
+
+        nav {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--coklat);
+            font-weight: 500;
+            font-size: 1rem;
+            transition: 0.2s;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 4px;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            border-bottom-color: var(--oranye);
+            color: var(--oranye);
+        }
+
+        .cart-icon {
+            position: relative;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--coklat);
+        }
+        .cart-icon:hover {
+            color: var(--oranye);
+        }
+        .cart-count {
+            background: var(--oranye);
+            color: white;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: -10px;
+            right: -16px;
+        }
+
+        /* ----- HERO ----- */
+        .hero {
+            text-align: center;
+            padding: 40px 0 20px;
+        }
+        .hero h1 {
+            font-size: 2.6rem;
+            color: var(--coklat);
+        }
+        .hero p {
+            font-size: 1.1rem;
+            color: #5F4A3C;
+            max-width: 500px;
+            margin: 8px auto 0;
+        }
+
+        /* ----- MENU (CARD) ----- */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 28px;
+            margin: 30px 0 50px;
+        }
+
+        .menu-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 18px 14px 20px;
+            box-shadow: var(--shadow);
+            transition: 0.25s ease;
+            text-align: center;
+            border: 1px solid #f0e4d9;
+            display: flex;
+            flex-direction: column;
+        }
+        .menu-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.08);
+            border-color: var(--oranye);
+        }
+
+        .menu-card img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 16px;
+            background: #f3ede8;
+            margin-bottom: 12px;
+        }
+
+        .menu-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--coklat);
+        }
+
+        .menu-card .desc {
+            font-size: 0.85rem;
+            color: #7b6457;
+            margin: 4px 0 10px;
+            flex: 1;
+        }
+
+        .menu-card .price {
+            font-weight: 700;
+            color: var(--oranye);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .btn-add {
+            background: var(--coklat);
+            border: none;
+            color: white;
+            padding: 10px 0;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+        }
+        .btn-add:hover {
+            background: var(--oranye);
+            transform: scale(1.02);
+        }
+
+        /* ----- KERANJANG SIDEBAR ----- */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 400px;
+            max-width: 92vw;
+            height: 100vh;
+            background: white;
+            box-shadow: -6px 0 20px rgba(0, 0, 0, 0.08);
+            padding: 28px 22px;
+            transition: 0.35s ease;
+            z-index: 999;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f0e4d9;
+            padding-bottom: 14px;
+        }
+        .cart-header h2 {
+            font-size: 1.6rem;
+            color: var(--coklat);
+        }
+        .close-cart {
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #7b6457;
+            transition: 0.2s;
+        }
+        .close-cart:hover {
+            color: var(--coklat);
+        }
+
+        .cart-items {
+            flex: 1;
+            margin: 18px 0 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0e4d9;
+            gap: 6px;
+        }
+        .cart-item-info {
+            flex: 1;
+        }
+        .cart-item-info h4 {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .cart-item-info .item-price {
+            font-size: 0.85rem;
+            color: var(--coklat-muda);
+        }
+        .cart-qty {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .cart-qty button {
+            background: #f0e4d9;
+            border: none;
+            border-radius: 40px;
+            width: 30px;
+            height: 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.15s;
+            color: var(--coklat);
+        }
+        .cart-qty button:hover {
+            background: var(--oranye);
+            color: white;
+        }
+        .cart-qty span {
+            font-weight: 600;
+            min-width: 20px;
+            text-align: center;
+        }
+        .remove-item {
+            background: transparent;
+            border: none;
+            color: #b58b7a;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .remove-item:hover {
+            color: #c0392b;
+        }
+
+        .cart-total {
+            border-top: 2px solid #f0e4d9;
+            padding-top: 16px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            display: flex;
+            justify-content: space-between;
+            margin: 6px 0 14px;
+        }
+
+        .btn-pay {
+            background: var(--oranye);
+            border: none;
+            color: white;
+            font-weight: 700;
+            padding: 14px 0;
+            border-radius: 60px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+        }
+        .btn-pay:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .btn-pay:hover:not(:disabled) {
+            background: var(--coklat);
+        }
+
+        /* ----- SPIN WHEEL (gimmick) ----- */
+        .spin-section {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px 20px 40px;
+            margin: 40px 0;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .spin-section h2 {
+            color: var(--coklat);
+            margin-bottom: 14px;
+        }
+        .wheel-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .wheel-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+        }
+        #wheelCanvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15);
+            transition: none;
+            cursor: pointer;
+        }
+        .spin-btn {
+            background: var(--coklat);
+            border: none;
+            color: white;
+            font-weight: 700;
+            padding: 14px 40px;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 6px;
+        }
+        .spin-btn:hover {
+            background: var(--oranye);
+            transform: scale(1.03);
+        }
+        .spin-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .discount-result {
+            background: #f7ede1;
+            padding: 18px 20px;
+            border-radius: 40px;
+            margin: 12px 0 4px;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        /* ----- KONFIRMASI (ringkasan) ----- */
+        .confirmation-box {
+            background: #fcf6f0;
+            border-radius: var(--radius);
+            padding: 24px;
+            margin: 16px 0 30px;
+            border: 1px solid #e4d5c9;
+        }
+        .confirmation-box .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+        }
+        .confirmation-box .total-bayar {
+            font-weight: 700;
+            font-size: 1.4rem;
+            border-top: 2px solid #dccbc0;
+            padding-top: 14px;
+            margin-top: 6px;
+        }
+
+        .btn-final {
+            background: #2e7d5e;
+            border: none;
+            color: white;
+            padding: 14px 30px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+        }
+        .btn-final:hover {
+            background: #1e5f44;
+        }
+
+        /* ----- TOAST ----- */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--coklat);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: 500;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transition: 0.3s ease;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        .toast.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* ----- FOOTER ----- */
+        footer {
+            background: #f3e7dd;
+            padding: 32px 0 24px;
+            margin-top: 30px;
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+        footer .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        footer .info p {
+            margin: 4px 0;
+            color: #3e2c23;
+        }
+        footer .social a {
+            margin-right: 16px;
+            color: var(--coklat);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 640px) {
+            .nav-wrapper {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            nav {
+                gap: 16px;
+                width: 100%;
+                justify-content: space-between;
+            }
+            .menu-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 16px;
+            }
+            .cart-sidebar {
+                width: 100%;
+                right: -110%;
+                padding: 20px 16px;
+            }
+            .wheel-container {
+                width: 220px;
+                height: 220px;
+            }
+        }
+
+        /* utilitas */
+        .hidden {
+            display: none;
+        }
+        .mt-2 {
+            margin-top: 12px;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .gap-1 {
+            gap: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOAST -->
+    <div id="toast" class="toast">✔ Item ditambahkan!</div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container nav-wrapper">
+            <div class="logo">
+                ☕ Kafe Lekker <span>Lekker</span>
+            </div>
+            <nav>
+                <a href="#menu-section">Beranda</a>
+                <a href="#menu-section">Menu</a>
+                <a id="nav-cart" class="cart-icon">
+                    🛒 <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <a href="#tentang">Tentang</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="container hero">
+        <h1>Rasakan <span style="color:var(--oranye);">Lekker</span> di setiap tegukan</h1>
+        <p>Kopi & makanan favorit, ditambah diskon seru dengan spin wheel!</p>
+    </section>
+
+    <!-- MENU -->
+    <section id="menu-section" class="container">
+        <h2 style="color:var(--coklat); margin-bottom:6px;">☕ Menu Spesial</h2>
+        <div class="menu-grid" id="menuGrid"></div>
+    </section>
+
+    <!-- SPIN WHEEL (gimmick) -->
+    <section id="spin-section" class="container spin-section">
+        <h2>🎡 Spin & Dapatkan Diskon!</h2>
+        <p style="color:#5f4a3c;">Putar roda untuk mendapat diskon menarik ✨</p>
+        <div class="wheel-wrapper">
+            <div class="wheel-container">
+                <canvas id="wheelCanvas" width="400" height="400"></canvas>
+            </div>
+            <button class="spin-btn" id="spinBtn">🔄 Putar Roda</button>
+            <div id="discountDisplay" class="discount-result">Diskon: —</div>
+        </div>
+    </section>
+
+    <!-- TENTANG KAMI -->
+    <section id="tentang" class="container" style="padding: 20px 0 10px;">
+        <h2 style="color:var(--coklat);">Tentang Kafe Lekker</h2>
+        <p style="max-width:600px; color:#4d3a30;">Kafe Lekker hadir sejak 2025, menyajikan kopi pilihan dan camilan hangat dengan sentuhan lokal. Kami percaya setiap cangkir bercerita.</p>
+    </section>
+
+    <!-- KERANJANG SIDEBAR -->
+    <div id="cartSidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h2>🛒 Keranjang</h2>
+            <button class="close-cart" id="closeCartBtn">✕</button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-total">
+            <span>Total</span>
+            <span id="cartTotalPrice">Rp 0</span>
+        </div>
+        <button class="btn-pay" id="payBtn">Lanjutkan ke Pembayaran</button>
+        <p style="font-size:0.8rem; color:#8f7a6b; margin-top:10px; text-align:center;">*Diskon akan diterapkan di konfirmasi</p>
+    </div>
+
+    <!-- OVERLAY KONFIRMASI (muncul setelah bayar) -->
+    <div id="confirmationOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.3); backdrop-filter:blur(4px); z-index:9999; align-items:center; justify-content:center; padding:20px;">
+        <div style="background:white; max-width:460px; width:100%; border-radius:30px; padding:30px 24px; box-shadow:0 20px 40px rgba(0,0,0,0.2);">
+            <h2 style="color:var(--coklat);">✅ Pesanan Sukses!</h2>
+            <div id="confirmationContent" style="margin:14px 0;"></div>
+            <button id="closeConfirmBtn" style="background:var(--coklat); border:none; color:white; padding:12px 0; border-radius:60px; width:100%; font-weight:600; cursor:pointer;">Tutup</button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="info">
+                <p><strong>Kafe Lekker</strong></p>
+                <p>📍 Jl. Kopi Nusantara No. 12, Jakarta</p>
+                <p>🕒 08.00 – 22.00 (Setiap hari)</p>
+            </div>
+            <div class="social">
+                <a href="#">Instagram</a>
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* =======================================================
+           DATA MENU & STATE
+           ======================================================= */
+        const MENU_ITEMS = [
+            { id: 1, name: 'Espresso Shot', desc: 'Kopi pekat khas Italia', price: 25000, img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=300&h=300&fit=crop&crop=center' },
+            { id: 2, name: 'Cappuccino', desc: 'Busu susu lembut + coklat', price: 32000, img: 'https://images.unsplash.com/photo-1534777367038-9404f45b869b?w=300&h=300&fit=crop&crop=center' },
+            { id: 3, name: 'Matcha Latte', desc: 'Matcha premium + susu', price: 29000, img: 'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=300&h=300&fit=crop&crop=center' },
+            { id: 4, name: 'Croissant', desc: 'Puff pastry buttery', price: 22000, img: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=300&h=300&fit=crop&crop=center' },
+            { id: 5, name: 'Nasi Goreng', desc: 'Nasi goreng spesial kafe', price: 42000, img: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=300&h=300&fit=crop&crop=center' },
+            { id: 6, name: 'Pancake', desc: 'Pancake madu + buah segar', price: 38000, img: 'https://images.unsplash.com/photo-1556911261-6bd341186b2f?w=300&h=300&fit=crop&crop=center' }
+        ];
+
+        // State
+        let cart = JSON.parse(localStorage.getItem('kafeLekkerCart')) || [];
+        let discountPercent = 0; // dari spin wheel
+
+        // DOM refs
+        const menuGrid = document.getElementById('menuGrid');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartItemsEl = document.getElementById('cartItems');
+        const cartTotalPrice = document.getElementById('cartTotalPrice');
+        const cartCount = document.getElementById('cartCount');
+        const payBtn = document.getElementById('payBtn');
+        const toast = document.getElementById('toast');
+        const spinBtn = document.getElementById('spinBtn');
+        const discountDisplay = document.getElementById('discountDisplay');
+
+        // ----- RENDER MENU -----
+        function renderMenu() {
+            menuGrid.innerHTML = '';
+            MENU_ITEMS.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'menu-card';
+                card.innerHTML = `
+                    <img src="${item.img}" alt="${item.name}" loading="lazy" />
+                    <h3>${item.name}</h3>
+                    <div class="desc">${item.desc}</div>
+                    <div class="price">Rp ${item.price.toLocaleString()}</div>
+                    <button class="btn-add" data-id="${item.id}">+ Tambah ke Keranjang</button>
+                `;
+                menuGrid.appendChild(card);
+            });
+
+            // event listener tambah
+            document.querySelectorAll('.btn-add').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = Number(btn.dataset.id);
+                    const item = MENU_ITEMS.find(m => m.id === id);
+                    addToCart(item);
+                });
+            });
+        }
+
+        // ----- KERANJANG -----
+        function addToCart(item) {
+            const existing = cart.find(c => c.id === item.id);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...item, qty: 1 });
+            }
+            saveAndRenderCart();
+            showToast(`✔ ${item.name} ditambahkan`);
+        }
+
+        function removeItem(id) {
+            cart = cart.filter(c => c.id !== id);
+            saveAndRenderCart();
+        }
+
+        function updateQty(id, delta) {
+            const item = cart.find(c => c.id === id);
+            if (!item) return;
+            item.qty += delta;
+            if (item.qty <= 0) {
+                removeItem(id);
+                return;
+            }
+            saveAndRenderCart();
+        }
+
+        function getTotal() {
+            return cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+        }
+
+        function saveAndRenderCart() {
+            localStorage.setItem('kafeLekkerCart', JSON.stringify(cart));
+            renderCart();
+            updateCartCount();
+        }
+
+        function renderCart() {
+            if (!cartItemsEl) return;
+            if (cart.length === 0) {
+                cartItemsEl.innerHTML = `<p style="color:#7b6457; padding:20px 0;">Keranjang kosong ☕</p>`;
+                cartTotalPrice.textContent = 'Rp 0';
+                payBtn.disabled = true;
+                return;
+            }
+            let html = '';
+            cart.forEach(item => {
+                const subTotal = item.price * item.qty;
+                html += `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <h4>${item.name}</h4>
+                            <div class="item-price">Rp ${item.price.toLocaleString()} × ${item.qty}</div>
+                        </div>
+                        <div class="cart-qty">
+                            <button class="qty-btn" data-id="${item.id}" data-delta="-1">−</button>
+                            <span>${item.qty}</span>
+                            <button class="qty-btn" data-id="${item.id}" data-delta="1">+</button>
+                            <button class="remove-item" data-id="${item.id}">✕</button>
+                        </div>
+                    </div>
+                `;
+            });
+            cartItemsEl.innerHTML = html;
+            const total = getTotal();
+            cartTotalPrice.textContent = `Rp ${total.toLocaleString()}`;
+            payBtn.disabled = false;
+
+            // event listeners qty & remove
+            document.querySelectorAll('.qty-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = Number(btn.dataset.id);
+                    const delta = Number(btn.dataset.delta);
+                    updateQty(id, delta);
+                });
+            });
+            document.querySelectorAll('.remove-item').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = Number(btn.dataset.id);
+                    removeItem(id);
+                });
+            });
+        }
+
+        function updateCartCount() {
+            const total = cart.reduce((sum, i) => sum + i.qty, 0);
+            cartCount.textContent = total;
+        }
+
+        // ----- TOAST -----
+        function showToast(msg) {
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        // ----- SIDEBAR TOGGLE -----
+        document.getElementById('nav-cart').addEventListener('click', (e) => {
+            e.preventDefault();
+            cartSidebar.classList.toggle('open');
+        });
+        document.getElementById('closeCartBtn').addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+        });
+        // tutup sidebar saat klik luar (opsional)
+        document.addEventListener('click', (e) => {
+            if (cartSidebar.classList.contains('open') && !cartSidebar.contains(e.target) && e.target.id !== 'nav-cart') {
+                cartSidebar.classList.remove('open');
+            }
+        });
+
+        // ----- SPIN WHEEL (canvas) -----
+        const canvas = document.getElementById('wheelCanvas');
+        const ctx = canvas.getContext('2d');
+        const segments = ['0%', '5%', '10%', '15%', '20%', '25%', '30%', '50%'];
+        const colors = ['#E6C9B3', '#D9B49A', '#CDA386', '#C09176', '#B47D61', '#A56B4E', '#965C3E', '#8A5035'];
+        let isSpinning = false;
+        let currentAngle = 0;
+
+        function drawWheel(rotation = 0) {
+            const arc = (2 * Math.PI) / segments.length;
+            const radius = 190;
+            const center = 200;
+            ctx.clearRect(0, 0, 400, 400);
+
+            segments.forEach((label, i) => {
+                const angle = i * arc + rotation;
+                ctx.beginPath();
+                ctx.moveTo(center, center);
+                ctx.arc(center, center, radius, angle, angle + arc);
+                ctx.closePath();
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.fill();
+                ctx.strokeStyle = '#f0e4d9';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // teks
+                ctx.save();
+                ctx.translate(center, center);
+                ctx.rotate(angle + arc / 2);
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.font = 'bold 18px Poppins';
+                ctx.fillStyle = '#2E1F1A';
+                ctx.shadowColor = 'rgba(255,255,240,0.6)';
+                ctx.shadowBlur = 6;
+                ctx.fillText(label, 140, 0);
+                ctx.restore();
+            });
+
+            // pointer (segitiga di atas)
+            ctx.fillStyle = '#5E3A2B';
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = 'rgba(0,0,0,0.2)';
+            ctx.beginPath();
+            ctx.moveTo(200, 16);
+            ctx.lineTo(190, 30);
+            ctx.lineTo(210, 30);
+            ctx.closePath();
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            // lingkaran tengah
+            ctx.beginPath();
+            ctx.arc(center, center, 26, 0, 2 * Math.PI);
+            ctx.fillStyle = '#F7EDE1';
+            ctx.fill();
+            ctx.strokeStyle = '#5E3A2B';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+        }
+
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            spinBtn.disabled = true;
+            discountDisplay.textContent = 'Memutar...';
+
+            const spinDuration = 4000 + Math.random() * 1500;
+            const extraSpins = 6 + Math.random() * 8;
+            const targetAngle = currentAngle + extraSpins * 2 * Math.PI + (Math.random() * 2 * Math.PI);
+            const startAngle = currentAngle;
+            const startTime = performance.now();
+
+            function animateSpin(time) {
+                const elapsed = time - startTime;
+                const progress = Math.min(elapsed / spinDuration, 1);
+                // easing cubic-out
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const angle = startAngle + (targetAngle - startAngle) * eased;
+                currentAngle = angle;
+                drawWheel(angle);
+
+                if (progress < 1) {
+                    requestAnimationFrame(animateSpin);
+                } else {
+                    currentAngle = angle % (2 * Math.PI);
+                    // tentukan segmen
+                    const arc = (2 * Math.PI) / segments.length;
+                    // pointer di atas = sudut -PI/2
+                    const pointerAngle = (2 * Math.PI - (currentAngle % (2 * Math.PI)) + Math.PI / 2) % (2 * Math.PI);
+                    const idx = Math.floor(pointerAngle / arc) % segments.length;
+                    const discountStr = segments[idx];
+                    discountPercent = parseInt(discountStr.replace('%', ''));
+                    discountDisplay.textContent = `🎉 Diskon ${discountStr}!`;
+
+                    isSpinning = false;
+                    spinBtn.disabled = false;
+                }
+            }
+            requestAnimationFrame(animateSpin);
+        }
+
+        spinBtn.addEventListener('click', spinWheel);
+
+        // ----- PEMBAYARAN & KONFIRMASI -----
+        const confirmationOverlay = document.getElementById('confirmationOverlay');
+        const confirmationContent = document.getElementById('confirmationContent');
+
+        payBtn.addEventListener('click', () => {
+            if (cart.length === 0) return;
+            // tutup sidebar
+            cartSidebar.classList.remove('open');
+
+            // jika belum spin, diskon 0%
+            if (discountPercent === 0 && !discountDisplay.textContent.includes('50')) {
+                // tidak memaksa, tapi bisa spin dulu
+                if (!confirm('🔔 Belum spin diskon! Putar roda sekarang?')) {
+                    // tetap lanjut dengan diskon 0
+                }
+            }
+
+            const totalAwal = getTotal();
+            const diskon = Math.round(totalAwal * (discountPercent / 100));
+            const totalBayar = totalAwal - diskon;
+
+            // buat daftar item ringkasan
+            let itemsHtml = cart.map(i => `<div>${i.name} × ${i.qty} = Rp ${(i.price * i.qty).toLocaleString()}</div>`).join('');
+            const orderNumber = 'LK' + String(Math.floor(100 + Math.random() * 900)) + Date.now().toString().slice(-4);
+
+            confirmationContent.innerHTML = `
+                <div class="confirmation-box">
+                    <div class="row"><span>${itemsHtml}</span></div>
+                    <div class="row"><span>Total awal</span><span>Rp ${totalAwal.toLocaleString()}</span></div>
+                    <div class="row"><span>Diskon (${discountPercent}%)</span><span>- Rp ${diskon.toLocaleString()}</span></div>
+                    <div class="row total-bayar"><span>Total bayar</span><span>Rp ${totalBayar.toLocaleString()}</span></div>
+                </div>
+                <p style="font-size:0.95rem; margin:10px 0 6px;">🧾 Nomor pesanan: <strong>#${orderNumber}</strong></p>
+                <p style="color:#5f4a3c;">Silakan tunjukkan ke kasir ✨</p>
+            `;
+            confirmationOverlay.style.display = 'flex';
+
+            // kosongkan keranjang & simpan riwayat (opsional)
+            const history = JSON.parse(localStorage.getItem('kafeLekkerHistory')) || [];
+            history.push({ order: orderNumber, items: cart.slice(), total: totalBayar, date: new Date().toLocaleString() });
+            localStorage.setItem('kafeLekkerHistory', JSON.stringify(history));
+
+            cart = [];
+            saveAndRenderCart();
+            discountPercent = 0;
+            discountDisplay.textContent = 'Diskon: —';
+        });
+
+        document.getElementById('closeConfirmBtn').addEventListener('click', () => {
+            confirmationOverlay.style.display = 'none';
+        });
+        // klik overlay juga tutup
+        confirmationOverlay.addEventListener('click', (e) => {
+            if (e.target === confirmationOverlay) confirmationOverlay.style.display = 'none';
+        });
+
+        // ----- INIT -----
+        renderMenu();
+        renderCart();
+        updateCartCount();
+        drawWheel(0);
+
+        // scroll halus untuk nav
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const target = document.querySelector(targetId);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        console.log('☕ Kafe Lekker siap!');
+    </script>
+</body>
+</html>
